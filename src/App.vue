@@ -1,22 +1,26 @@
 <template>
   <div id="app">
     <!-- Naviagtion -->
-    <h1>Zoov</h1>
+    <navigation></navigation>
     <!-- Map -->
-    <google-map/>
+    <google-map></google-map>
     <!-- About -->
-    <div>footer</div>
+    <about></about>
   </div>
 </template>
 
 <script>
-import GoogleMap from "./components/GoogleMap";
+import Navigation from "@/components/Navigation";
+import GoogleMap from "@/components/GoogleMap";
+import About from "@/components/About";
 
 export default {
   name: "App",
 
   components: {
-    GoogleMap
+    Navigation,
+    GoogleMap,
+    About
   }
 };
 </script>

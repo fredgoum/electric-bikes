@@ -1,7 +1,7 @@
 <template>
   <div>    
     <!-- Map and Bikes -->
-    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 108px);">
+    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 100px);">
       <!-- Bikes -->
       <gmap-marker v-for="(bike, index) in bikes"
                    :key="`bike-${index}`"
@@ -15,20 +15,14 @@
                         :position="bikeInfoWindowPos"
                         :opened="bikeInfoWindowOpen"
                         @closeclick="bikeInfoWindowOpen=false">
-        <strong class="green">
+        <h4 style="color: #331C54;">
           Mon velo zoov
-        </strong>
+        </h4>
         <div style="margin-top: 5px;" v-html="bikeInfoWindowContent"></div>
       </gmap-info-window>
     </gmap-map>
   </div>
 </template>
-
-<style>
-  .green {
-    color: green;
-  }
-</style>
 
 <script>
 import ApiSrv from '@/js/services/ApiSrv';
@@ -95,10 +89,10 @@ export default {
     getBikeInfoWindowContent(bike) {
       return(
         `<div>
-          <strong class="green">Status</strong>: ${this.bikesStatus[bike.service_status]}
+          <strong>Status</strong>: ${this.bikesStatus[bike.service_status]}
         </div>
         <div>
-          <strong class="green">Batterie</strong>: ${bike.battery_level}%
+          <strong>Batterie</strong>: ${bike.battery_level}%
         </div>`
       );
     },
