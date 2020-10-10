@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <google-map />
+    <!-- Naviagtion -->
+    <h1>Zoov</h1>
+    <!-- Map -->
+    <google-map/>
+    <!-- About -->
+    <div>footer</div>
   </div>
 </template>
 
