@@ -17,9 +17,29 @@ async function getBikes() {
   const result = await apiData;
   return result;
 }
+/**
+ * Create a bike with POST method
+ * @param {Object} bike new bike to create
+ */
+function addBike(bike) {
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(bike),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try {
+    fetch(apiUrl, options)
+      .then(res => res.json());
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 window.apiSrv = {
   getBikes,
+  addBike
 };
 
 export default window.apiSrv;

@@ -1,13 +1,16 @@
 <template>
-  <div>    
+  <div>
+    <!-- Create bike -->
+    <sub-navigation @showBikeOnMap="showBikeOnMap"></sub-navigation>
+
     <!-- Map and Bikes -->
-    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 100px);">
+    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 170px);">
       <!-- Bikes -->
       <gmap-marker v-for="(bike, index) in bikes"
                    :key="`bike-${index}`"
                    :position="bike.position"
                    :title="`Batterie: ${bike.battery_level}%`"
-                   :icon="require('@/assets/Bitmap.png')"
+                   :icon="require('@/assets/map_bike.png')"
                    @click="toggleBikeInfoWindow(bike, index)">
       </gmap-marker>
       <!-- Bikes Infos -->
@@ -26,13 +29,17 @@
 
 <script>
 import ApiSrv from '@/js/services/ApiSrv';
+import SubNavigation from './SubNavigation';
 
 export default {
   name: "GoogleMap",
+  components: {
+    SubNavigation
+  },
 
   data() {
     return {
-      center: { lat: 48.7544, lng: 2.30091 },
+      center: { lat: 48.8534, lng: 2.3488 }, // center map on paris
       bikes: [],
       markers: [],
       bikeInfoWindowPos: {
@@ -74,12 +81,10 @@ export default {
     toggleBikeInfoWindow(bike, index) {
       this.bikeInfoWindowPos = bike.position;
       this.bikeInfoWindowContent = this.getBikeInfoWindowContent(bike);
-      // check if its the same bike that was selected
+
       if (this.currentBikeIndex == index) {
         this.bikeInfoWindowOpen = ! this.bikeInfoWindowOpen;
       }
-      // if different bike set infowindow to open
-      // and reset current bike index
       else {
         this.bikeInfoWindowOpen = true;
         this.currentBikeIndex = index;
@@ -95,6 +100,11 @@ export default {
           <strong>Batterie</strong>: ${bike.battery_level}%
         </div>`
       );
+    },
+    // Display the new bike
+    showBikeOnMap(newBike) {
+      this.bikes.push(newBike);
+      this.center = newBike.position;
     },
   },
 };
