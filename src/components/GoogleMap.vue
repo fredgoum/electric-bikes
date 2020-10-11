@@ -1,9 +1,13 @@
 <template>
   <div>
-    <!-- Create bike -->
+    <!-- Create Bike Section-->
     <sub-navigation @setMapCenter="setMapCenter"
-                    @updateMap="updateMap">
+                    @updateMap="updateMap"
+                    @sendUserAction="sendUserAction">
     </sub-navigation>
+
+    <!-- User action message -->
+    <saving-bar :snackbar="snackbar" :action="userAction"></saving-bar>
 
     <!-- Map and Bikes -->
     <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 170px);">
@@ -25,7 +29,8 @@
                            :content="bikeInfoWindowContent"
                            @updateMap="updateMap"
                            @updateWindowContent="updateWindowContent"
-                           @closeWindow="closeWindow">
+                           @closeWindow="closeWindow"
+                           @sendUserAction="sendUserAction">
         </bike-informations>
       </gmap-info-window>
     </gmap-map>
@@ -34,12 +39,14 @@
 
 <script>
   import ApiSrv from '@/js/services/ApiSrv';
+  import SavingBar from '@/components/Reusable/SavingBar';
   import SubNavigation from './SubNavigation';
   import BikeInformations from './BikeInformations';
 
   export default {
     name: "GoogleMap",
     components: {
+      SavingBar,
       SubNavigation,
       BikeInformations
     },
@@ -64,7 +71,9 @@
           }
         },
         currentBikeIndex: null,
-        bikesStatus: { 1: 'libre', 2: 'verrouillé', 3: 'en service' }
+        bikesStatus: { 1: 'libre', 2: 'verrouillé', 3: 'en service' },
+        snackbar: { value: false },
+        userAction: '',
       };
     },
     computed: {
@@ -133,6 +142,11 @@
           </div>`
         );
       },
+      // Send the user action
+      sendUserAction(action) {
+        this.snackbar.value = true;
+        this.userAction = action;
+      }
     },
   };
 </script>

@@ -62,6 +62,7 @@
             if (response.ok) {
               this.$emit('updateMap');
               this.$emit('setMapCenter', newBike);
+              this.$emit('sendUserAction', 'add');
             }
           }).catch((message) => {
             console.log(message);

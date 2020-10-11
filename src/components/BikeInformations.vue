@@ -89,6 +89,7 @@
           if (response.ok) {
             this.$emit('updateMap');
             this.$emit('closeWindow');
+            this.$emit('sendUserAction', 'delete');
           }
         }).catch((message) => {
           console.log(message);
@@ -99,6 +100,7 @@
         ApiSrv.updateBike(this.selectedBike).then((response) => {
           if (response.ok) {
             this.$emit('updateWindowContent', this.selectedBike);
+            this.$emit('sendUserAction', 'update');
             this.contentIsReady = true;
           }
         }).catch((message) => {
