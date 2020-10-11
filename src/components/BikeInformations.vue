@@ -83,7 +83,9 @@
       this.contentIsReady = true;
     },
     methods: {
-      // Call api server delete bike
+      /**
+       * Call api server delete bike
+       */
       deleteBike() {
         ApiSrv.deleteBike(this.selectedBike._id).then((response) => {
           if (response.ok) {
@@ -95,7 +97,9 @@
           console.log(message);
         });
       },
-      // Call api change bike status to free, booked or in use
+      /**
+       * Call api to change bike status to free, booked or in use
+       */
       changeBikeStatus() {
         ApiSrv.updateBike(this.selectedBike).then((response) => {
           if (response.ok) {

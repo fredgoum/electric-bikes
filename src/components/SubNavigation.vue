@@ -39,11 +39,16 @@
       };
     },
     methods: {
-      // Receives place via the autocomplete component
+      /**
+       * Receives place via the autocomplete component
+       * @param {Object} place selected place
+       */
       setPlace(place) {
         this.selectedPlace = place;
       },
-      // Create new bike and show it on the map
+      /**
+       * Create new bike and show it on the map
+       */
       addBike() {
         if (this.selectedPlace) {
           const longitude = this.selectedPlace.geometry.location.lng();

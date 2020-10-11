@@ -83,7 +83,9 @@
       this.getAllBikes();
     },
     methods: {
-      // Get all Bikes API data from jsonbox.io
+      /**
+       * Get all Bikes API data from jsonbox.io
+       */
       getAllBikes() {
         ApiSrv.getBikes().then((response) => {
           this.bikes = response;
@@ -92,7 +94,9 @@
           console.log(message);
         });
       },
-      // Bikes markers coordinates to display
+      /**
+       * Bikes markers coordinates to display
+       */
       bikesMarkers() {
         this.bikes.forEach(bike => {
           const coordinates = {};
@@ -101,19 +105,30 @@
           bike.position = coordinates;
         });
       },
-      // Update Bikes on the map
+      /**
+       * Update Bikes on the map
+       */
       updateMap() {
         this.getAllBikes();
       },
-      // Center map to new bike position
+      /**
+       * Center map to new bike position
+       * @param {Object} newBike bike created
+       */
       setMapCenter(newBike) {
         this.center = newBike.position;
       },
-      // Close bike window informations
+      /**
+       * Close bike window informations
+       */
       closeWindow() {
         this.bikeInfoWindowOpen = false;
       },
-      // Open bike window informations
+      /**
+       * Open bike window informations
+       * @param {Object} bike selected bike
+       * @param {Integer} index bike index
+       */
       toggleBikeInfoWindow(bike, index) {
         this.bikeInfoWindowPos = bike.position;
         this.bikeInfoWindowContent = this.getBikeInfoWindowContent(bike);
@@ -127,11 +142,17 @@
           this.currentBikeIndex = index;
         }
       },
-      // Update Bike informations in window
+      /**
+       * Update Bike informations in window
+       * @param {Object} bike selected bike
+       */
       updateWindowContent(bike) {
         this.bikeInfoWindowContent = this.getBikeInfoWindowContent(bike);
       },
-      // Get bike informations
+      /**
+       * Get bike informations
+       * @param {Object} bike selected bike
+       */
       getBikeInfoWindowContent(bike) {
         return(
           `<div>
@@ -142,7 +163,10 @@
           </div>`
         );
       },
-      // Send the user action
+      /**
+       * Send the user action
+       * @param {String} action add, update or delete bike
+       */
       sendUserAction(action) {
         this.snackbar.value = true;
         this.userAction = action;
