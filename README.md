@@ -1,4 +1,5 @@
 # zoov
+Electric bikes for sharing.
 
 ## Project setup
 ```
