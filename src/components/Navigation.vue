@@ -6,8 +6,8 @@
 </template>
 
 <style>
- #logo {
-   height: 36px;
-   margin-right: 10px;
- }
+  #logo {
+    height: 36px;
+    margin-right: 10px;
+  }
 </style>

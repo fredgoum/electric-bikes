@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
-import GoogleMap from "@/components/GoogleMap";
-import About from "@/components/About";
+  import Navigation from "@/components/Navigation";
+  import GoogleMap from "@/components/GoogleMap";
+  import About from "@/components/About";
 
-export default {
-  name: "App",
+  export default {
+    name: "App",
 
-  components: {
-    Navigation,
-    GoogleMap,
-    About
-  }
-};
+    components: {
+      Navigation,
+      GoogleMap,
+      About
+    }
+  };
 </script>

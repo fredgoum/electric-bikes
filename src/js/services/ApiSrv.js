@@ -5,23 +5,22 @@ const apiUrl = `https://jsonbox.io/${jsonboxId}`;
  * Get bikes data from jsonbox.io API
  */
 async function getBikes() {
-  let apiData = [];
+  let data = [];
   try {
     const res = await fetch(apiUrl);
     if (! res.ok) throw new Error(res.status);
-    const data = await res.json();
-    if (data.length) apiData = data;
+    data = await res.json();
   } catch (error) {
     console.log(error);
   }
-  const result = await apiData;
-  return result;
+  return data;
 }
+
 /**
  * Create a bike with POST method
  * @param {Object} bike new bike to create
  */
-function addBike(bike) {
+async function addBike(bike) {
   const options = {
     method: 'POST',
     body: JSON.stringify(bike),
@@ -30,8 +29,27 @@ function addBike(bike) {
     }
   }
   try {
-    fetch(apiUrl, options)
-      .then(res => res.json());
+    const res = await fetch(apiUrl, options);
+    if (! res.ok) throw new Error(res.status);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+/**
+ * Delete a bike with DELETE method
+ * @param {Integer} bikeId Id of bike to delete
+ */
+async function deleteBike(bikeId) {
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try {
+    const res = await fetch(`${apiUrl}/${bikeId}`, options);
+    if (! res.ok) throw new Error(res.status);
   } catch (error) {
     console.log(error);
   }
@@ -39,7 +57,8 @@ function addBike(bike) {
 
 window.apiSrv = {
   getBikes,
-  addBike
+  addBike,
+  deleteBike
 };
 
 export default window.apiSrv;
