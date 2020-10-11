@@ -1,11 +1,13 @@
 <template>
   <div>
     <!-- Create bike -->
-    <sub-navigation @setMapCenter="setMapCenter" @updateMap="updateMap"></sub-navigation>
+    <sub-navigation @setMapCenter="setMapCenter"
+                    @updateMap="updateMap">
+    </sub-navigation>
 
     <!-- Map and Bikes -->
-    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 145px);">
-      <!-- Bikes -->
+    <gmap-map :center="center" :zoom="12" style="height: calc(100vh - 170px);">
+      <!-- Bikes Markers -->
       <gmap-marker v-for="(bike, index) in bikes"
                    :key="`bike-${index}`"
                    :position="bike.position"
@@ -16,12 +18,14 @@
       <gmap-info-window :options="bikeInfoWindowOptions"
                         :position="bikeInfoWindowPos"
                         :opened="bikeInfoWindowOpen"
-                        @closeclick="bikeInfoWindowOpen=false;">        
+                        @closeclick="closeWindow">        
         <!-- Bikes Informations -->
         <bike-informations v-if="bikeInfoWindowOpen"
                            :selectedBike="selectedBike"
                            :content="bikeInfoWindowContent"
-                           @updateMap="updateMap">
+                           @updateMap="updateMap"
+                           @updateWindowContent="updateWindowContent"
+                           @closeWindow="closeWindow">
         </bike-informations>
       </gmap-info-window>
     </gmap-map>
@@ -91,13 +95,16 @@
       // Update Bikes on the map
       updateMap() {
         this.getAllBikes();
-        if (this.bikeInfoWindowOpen) this.bikeInfoWindowOpen = false;
       },
       // Center map to new bike position
       setMapCenter(newBike) {
         this.center = newBike.position;
       },
-      // Open bike information window
+      // Close bike window informations
+      closeWindow() {
+        this.bikeInfoWindowOpen = false;
+      },
+      // Open bike window informations
       toggleBikeInfoWindow(bike, index) {
         this.bikeInfoWindowPos = bike.position;
         this.bikeInfoWindowContent = this.getBikeInfoWindowContent(bike);
@@ -111,7 +118,11 @@
           this.currentBikeIndex = index;
         }
       },
-      // Get informations on the bike
+      // Update Bike informations in window
+      updateWindowContent(bike) {
+        this.bikeInfoWindowContent = this.getBikeInfoWindowContent(bike);
+      },
+      // Get bike informations
       getBikeInfoWindowContent(bike) {
         return(
           `<div>

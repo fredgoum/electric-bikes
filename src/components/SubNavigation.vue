@@ -1,6 +1,6 @@
 <template>
-  <div style="margin-left: 5px;">
-    <div style="display: flex;">
+  <div style="margin-left: 5px; margin-bottom: 15px;">
+    <div style="display: flex; margin-top: 5px; margin-bottom: 5px;">
       <h3>Rechercher et ajouter un vélo</h3>
       <img src="@/assets/map_bike.png" alt="vélo" style="height: 25px;">
     </div>
@@ -39,7 +39,7 @@
       };
     },
     methods: {
-      // Receives a place object via the autocomplete component
+      // Receives place via the autocomplete component
       setPlace(place) {
         this.selectedPlace = place;
       },
@@ -57,10 +57,12 @@
             battery_level: 100
           };
 
-          // call api server create bike
-          ApiSrv.addBike(newBike).then(() => {
-            this.$emit('updateMap');
-            this.$emit('setMapCenter', newBike);
+          // Call api server create bike
+          ApiSrv.addBike(newBike).then((response) => {
+            if (response.ok) {
+              this.$emit('updateMap');
+              this.$emit('setMapCenter', newBike);
+            }
           }).catch((message) => {
             console.log(message);
           });

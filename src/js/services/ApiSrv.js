@@ -5,15 +5,15 @@ const apiUrl = `https://jsonbox.io/${jsonboxId}`;
  * Get bikes data from jsonbox.io API
  */
 async function getBikes() {
-  let data = [];
+  let response = [];
   try {
     const res = await fetch(apiUrl);
     if (! res.ok) throw new Error(res.status);
-    data = await res.json();
+    response = await res.json();
   } catch (error) {
     console.log(error);
   }
-  return data;
+  return response;
 }
 
 /**
@@ -21,6 +21,7 @@ async function getBikes() {
  * @param {Object} bike new bike to create
  */
 async function addBike(bike) {
+  const url = apiUrl;
   const options = {
     method: 'POST',
     body: JSON.stringify(bike),
@@ -28,12 +29,25 @@ async function addBike(bike) {
       'Content-Type': 'application/json'
     }
   }
-  try {
-    const res = await fetch(apiUrl, options);
-    if (! res.ok) throw new Error(res.status);
-  } catch (error) {
-    console.log(error);
+  const response = await sendRequest(url, options);
+  return response;
+}
+
+/**
+ * Update a bike with PUT method
+ * @param {Object} bike bike to update
+ */
+async function updateBike(bike) {
+  const url = `${apiUrl}/${bike._id}`;
+  const options = {
+    method: 'PUT',
+    body: JSON.stringify(bike),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }
+  const response = await sendRequest(url, options);
+  return response;
 }
 
 /**
@@ -41,23 +55,38 @@ async function addBike(bike) {
  * @param {Integer} bikeId Id of bike to delete
  */
 async function deleteBike(bikeId) {
+  const url = `${apiUrl}/${bikeId}`;
   const options = {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     }
   }
+  const response = await sendRequest(url, options);
+  return response;
+}
+
+ /**
+  * Send request to api
+  * @param {String} url is the url to send
+  * @param {Object} options is the method options
+  */
+async function sendRequest(url, options) {
+  let response = null
   try {
-    const res = await fetch(`${apiUrl}/${bikeId}`, options);
+    const res = await fetch(url, options);
     if (! res.ok) throw new Error(res.status);
+    response = res;
   } catch (error) {
     console.log(error);
   }
+  return response;
 }
 
 window.apiSrv = {
   getBikes,
   addBike,
+  updateBike,
   deleteBike
 };
 
