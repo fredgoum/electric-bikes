@@ -3,13 +3,19 @@
   <div v-if="! editBikeStatus">
     <div>
       <h3 style="color: #331C54; text-align: center;">Mon vélo zoov</h3>
-      <div style="margin: 10px; text-align: center;" v-html="content"></div>
+      <!-- Window content -->
+      <div style="margin: 10px; text-align: center;">
+        <div v-if="contentIsReady" v-html="content"></div>
+        <div v-else>
+          <v-progress-circular indeterminate></v-progress-circular>
+        </div>
+      </div>
     </div>
     <v-divider></v-divider>
     <!-- Update Btn-->
     <div style="margin-top: 10px; margin-bottom: 2px;">
       <v-btn id="update-btn" depressed rounded color="#331C54"
-             @click="editBikeStatus = true">
+             @click="editBikeStatus = true; contentIsReady = false;">
         Mettre à jour
       </v-btn>
     </div>
@@ -58,7 +64,8 @@
     data() {
       return {
         editBikeStatus: false,
-        bikesStatus: [ { id: 1, label: 'libre' }, { id: 2, label: 'verrouillé' }, { id: 3, label: 'en service' } ]
+        bikesStatus: [ { id: 1, label: 'libre' }, { id: 2, label: 'verrouillé' }, { id: 3, label: 'en service' } ],
+        contentIsReady: false,
       };
     },
     computed: {
@@ -71,6 +78,9 @@
           this.selectedBike.service_status = newVal.id;
         }
       }
+    },
+    created() {
+      this.contentIsReady = true;
     },
     methods: {
       // Call api server delete bike
@@ -89,6 +99,7 @@
         ApiSrv.updateBike(this.selectedBike).then((response) => {
           if (response.ok) {
             this.$emit('updateWindowContent', this.selectedBike);
+            this.contentIsReady = true;
           }
         }).catch((message) => {
           console.log(message);
