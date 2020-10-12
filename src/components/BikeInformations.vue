@@ -2,9 +2,9 @@
   <!-- Status and Battery level -->
   <div v-if="! editBikeStatus">
     <div>
-      <h3 style="color: #331C54; text-align: center;">Mon vélo zoov</h3>
+      <h3 id="bike-info-title">Mon vélo zoov</h3>
       <!-- Window content -->
-      <div style="margin: 10px; text-align: center;">
+      <div id="window-content">
         <div v-if="contentIsReady" v-html="content"></div>
         <div v-else>
           <v-progress-circular indeterminate></v-progress-circular>
@@ -13,7 +13,7 @@
     </div>
     <v-divider></v-divider>
     <!-- Update Btn-->
-    <div style="margin-top: 10px; margin-bottom: 2px;">
+    <div id="update-btn-contenair">
       <v-btn id="update-btn" depressed rounded color="#331C54"
              @click="editBikeStatus = true; contentIsReady = false;">
         Mettre à jour
@@ -30,7 +30,7 @@
 
   <!-- Edit Bike State -->
   <div v-else style="width: 150px;">
-    <div style="margin: 5px; text-align: center;"><h3>Status</h3></div>
+    <div id="status-title"><h3>Status</h3></div>
     <v-divider></v-divider>
     <v-radio-group v-model="bikeStatus" style="margin-left: 10px;" @change="changeBikeStatus()">
       <v-radio
@@ -45,9 +45,25 @@
 </template>
 
 <style>
+  #bike-info-title {
+    color: #331C54;
+    text-align: center;
+  }
+  #window-content {
+    margin: 10px;
+    text-align: center;
+  }
   #update-btn, #delete-btn {
     height: 25px;
     color: white;
+  }
+  #update-btn-contenair {
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+  #status-title {
+    margin: 5px;
+    text-align: center;
   }
 </style>
 
