@@ -22,7 +22,7 @@
       <gmap-info-window :options="bikeInfoWindowOptions"
                         :position="bikeInfoWindowPos"
                         :opened="bikeInfoWindowOpen"
-                        @closeclick="closeWindow">        
+                        @closeclick="closeWindow">
         <!-- Bikes Informations -->
         <bike-informations v-if="bikeInfoWindowOpen"
                            :selectedBike="selectedBike"
@@ -98,7 +98,7 @@
        * Bikes markers coordinates to display
        */
       bikesMarkers() {
-        this.bikes.forEach(bike => {
+        this.bikes.forEach((bike) => {
           const coordinates = {};
           coordinates.lng = bike.location.coordinates[0];
           coordinates.lat = bike.location.coordinates[1];
