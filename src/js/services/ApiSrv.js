@@ -1,5 +1,4 @@
-const jsonboxId = 'azertyuiopqsdfghjklm';
-const apiUrl = `https://jsonbox.io/${jsonboxId}`;
+const apiUrl = `https://jsonbox.io/${process.env.VUE_APP_JSONBOX_ID}`;
 
 /**
  * Get bikes data from jsonbox.io API
