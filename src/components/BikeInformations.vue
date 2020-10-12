@@ -38,8 +38,8 @@
         :key="status.id"
         :label="status.label"
         :value="status"
-        color="#331C54"
-      ></v-radio>
+        color="#331C54">
+      </v-radio>
     </v-radio-group>
   </div>
 </template>
