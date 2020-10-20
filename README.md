@@ -1,4 +1,4 @@
-# zoov
+# Electric Bikes
 Electric bikes for sharing.
 
 ## Project setup
